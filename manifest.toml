@@ -9,7 +9,7 @@ description.fr = "Preuve de travail pour stopper les robots d'indexation de l'IA
 
 version = "1.14.2.~ynh1"
 
-maintainers = ["eric_G"]
+maintainers = []
 
 [upstream]
 license = "MIT"
