@@ -23,7 +23,7 @@ ynh_script_progression "Building $app..."
 ynh_go_install
 
 pushd $install_dir/build/
-	ynh_hide_warnings ynh_exec_as_app CGO_ENABLED=0 go build -o $install_dir/anubis
+	ynh_hide_warnings ynh_exec_as_app CGO_ENABLED=0 go build -ldflags='-s -w' -o $install_dir/anubis
 popd
 
 ynh_go_remove
