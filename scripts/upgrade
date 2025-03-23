@@ -1,0 +1,72 @@
+#!/bin/bash
+
+#=================================================
+# IMPORT GENERIC HELPERS
+#=================================================
+
+source _common.sh
+source /usr/share/yunohost/helpers
+
+#=================================================
+# STOP SYSTEMD SERVICE
+#=================================================
+ynh_script_progression "Stopping $app's systemd service..."
+
+ynh_systemctl --service="$app" --action="stop"
+
+#=================================================
+# DOWNLOAD, CHECK AND UNPACK SOURCE
+#=================================================
+ynh_script_progression "Upgrading source files..."
+
+ynh_setup_source --dest_dir="$install_dir/build" --full_replace --keep=".env"
+
+#=================================================
+# BUILD APP
+#=================================================
+ynh_script_progression "Building $app..."
+
+ynh_go_install
+
+pushd $install_dir/build/
+	ynh_hide_warnings ynh_exec_as_app CGO_ENABLED=0 go build -ldflags='-s -w' -o $install_dir/
+popd
+
+ynh_go_remove
+ynh_safe_rm "$install_dir/build/"
+ynh_safe_rm "$install_dir/.cache/"
+ynh_safe_rm "$install_dir/go/"
+ynh_safe_rm "$install_dir/.go-version"
+
+chmod +x "$install_dir/anubis"
+
+#=================================================
+# UPDATE A CONFIG FILE
+#=================================================
+ynh_script_progression "Updating $app's configuration files..."
+
+ynh_config_add --template=".env" --destination="$install_dir/anubis.env"
+
+#=================================================
+# REAPPLY SYSTEM CONFIGURATION
+#=================================================
+ynh_script_progression "Upgrading system configurations related to $app..."
+
+ynh_config_add_nginx
+
+ynh_config_add_systemd
+
+yunohost service add "$app" --description="HTTP defense proxy" --log="/var/log/$app/$app.log"
+
+#=================================================
+# START SYSTEMD SERVICE
+#=================================================
+ynh_script_progression "Starting $app's systemd service..."
+
+ynh_systemctl --service="$app" --action="start"
+
+#=================================================
+# END OF SCRIPT
+#=================================================
+
+ynh_script_progression "Upgrade of $app completed"

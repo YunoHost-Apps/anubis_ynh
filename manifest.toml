@@ -1,0 +1,60 @@
+#:schema https://raw.githubusercontent.com/YunoHost/apps/master/schemas/manifest.v2.schema.json
+
+packaging_format = 2
+
+id = "anubis"
+name = "Anubis"
+description.en = "Proof-of-work to stop AI crawlers"
+description.fr = "Preuve de travail pour stopper les robots d'indexation de l'IA"
+
+version = "1.14.2.~ynh1"
+
+maintainers = ["eric_G"]
+
+[upstream]
+license = "MIT"
+website = "https://anubis.techaro.lol/"
+admindoc = "https://anubis.techaro.lol/docs/admin/installation"
+code = "https://github.com/TecharoHQ/anubis"
+fund = "https://www.patreon.com/cadey"
+
+[integration]
+yunohost = ">= 12.0.9"
+helpers_version = "2.1"
+architectures = "all"
+multi_instance = true
+
+ldap = false
+
+sso = false
+
+disk = "50M"
+ram.build = "50M"
+ram.runtime = "50M"
+
+[install]
+    [install.domain]
+    type = "domain"
+
+    [install.init_main_permission]
+    type = "group"
+    default = "visitors"
+
+[resources]
+
+    [resources.sources]
+
+    [resources.sources.main]
+    url = "https://github.com/TecharoHQ/anubis/archive/refs/tags/v1.14.2.tar.gz"
+    sha256 = "4527499aa58dc89e38ec1effb62bac390baa4974c8b7c07d6dc3f6b93c9ba920"
+
+    # autoupdate.strategy = "latest_github_tag"
+
+    [resources.system_user]
+
+    [resources.install_dir]
+
+    [resources.permissions]
+    main.url = "/"
+
+    [resources.ports]

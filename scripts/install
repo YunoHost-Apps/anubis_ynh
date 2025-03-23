@@ -1,0 +1,69 @@
+#!/bin/bash
+
+#=================================================
+# IMPORT GENERIC HELPERS
+#=================================================
+
+source _common.sh
+source /usr/share/yunohost/helpers
+
+#=================================================
+# DOWNLOAD, CHECK AND UNPACK SOURCE
+#=================================================
+ynh_script_progression "Setting up source files..."
+
+# Download, check integrity, uncompress and patch the source from manifest.toml
+ynh_setup_source --dest_dir="$install_dir/build"
+
+#=================================================
+# BUILD APP
+#=================================================
+ynh_script_progression "Building $app..."
+
+ynh_go_install
+
+pushd $install_dir/build/
+	ynh_hide_warnings ynh_exec_as_app CGO_ENABLED=0 go build -o $install_dir/anubis
+popd
+
+ynh_go_remove
+ynh_safe_rm "$install_dir/build/"
+ynh_safe_rm "$install_dir/.cache/"
+ynh_safe_rm "$install_dir/go/"
+ynh_safe_rm "$install_dir/.go-version"
+
+chmod +x "$install_dir/anubis"
+
+#=================================================
+# APP INITIAL CONFIGURATION
+#=================================================
+ynh_script_progression "Adding $app's configuration files..."
+
+ynh_config_add --template=".env" --destination="$install_dir/anubis.env"
+
+#=================================================
+# SYSTEM CONFIGURATION
+#=================================================
+ynh_script_progression "Adding system configurations related to $app..."
+
+# Create a dedicated NGINX config using the conf/nginx.conf template
+ynh_config_add_nginx
+
+# Create a dedicated systemd config
+ynh_config_add_systemd
+
+yunohost service add "$app" --description="HTTP defense proxy" --log="/var/log/$app/$app.log"
+
+#=================================================
+# START SYSTEMD SERVICE
+#=================================================
+ynh_script_progression "Starting $app's systemd service..."
+
+# Start a systemd service
+ynh_systemctl --service="$app" --action="start"
+
+#=================================================
+# END OF SCRIPT
+#=================================================
+
+ynh_script_progression "Installation of $app completed"
