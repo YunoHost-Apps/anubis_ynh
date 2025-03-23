@@ -20,7 +20,7 @@ Il NE doit PAS être modifié à la main.
 
 Preuve de travail pour stopper les robots d'indexation de l'IA
 
-**Version incluse :** 1.14.2.~ynh1
+**Version incluse :** 1.14.2~ynh1
 ## Documentations et ressources
 
 - Site officiel de l’app : <https://anubis.techaro.lol/>

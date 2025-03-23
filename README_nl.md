@@ -23,7 +23,7 @@ This program is designed to help protect the small internet from the endless sto
 Anubis is a bit of a nuclear response. This will result in your website being blocked from smaller scrapers and may inhibit "good bots" like the Internet Archive. You can configure bot policy definitions to explicitly allowlist them and we are working on a curated set of "known good" bots to allow for a compromise between discoverability and uptime.
 
 
-**Geleverde versie:** 1.14.2.~ynh1
+**Geleverde versie:** 1.14.2~ynh1
 ## Documentatie en bronnen
 
 - Officiele website van de app: <https://anubis.techaro.lol/>
