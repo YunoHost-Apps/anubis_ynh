@@ -7,7 +7,7 @@ name = "Anubis"
 description.en = "Proof-of-work to stop AI crawlers"
 description.fr = "Preuve de travail pour stopper les robots d'indexation de l'IA"
 
-version = "1.14.2.~ynh1"
+version = "1.14.2~ynh1"
 
 maintainers = []
 
