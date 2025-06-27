@@ -13,26 +13,7 @@ source /usr/share/yunohost/helpers
 ynh_script_progression "Setting up source files..."
 
 # Download, check integrity, uncompress and patch the source from manifest.toml
-ynh_setup_source --dest_dir="$install_dir/build"
-
-#=================================================
-# BUILD APP
-#=================================================
-ynh_script_progression "Building $app..."
-
-ynh_go_install
-
-pushd $install_dir/build/
-	ynh_hide_warnings ynh_exec_as_app CGO_ENABLED=0 go build -o $install_dir/anubis
-popd
-
-ynh_go_remove
-ynh_safe_rm "$install_dir/build/"
-ynh_safe_rm "$install_dir/.cache/"
-ynh_safe_rm "$install_dir/go/"
-ynh_safe_rm "$install_dir/.go-version"
-
-chmod +x "$install_dir/anubis"
+ynh_setup_source --dest_dir="$install_dir"
 
 #=================================================
 # APP INITIAL CONFIGURATION
@@ -40,6 +21,8 @@ chmod +x "$install_dir/anubis"
 ynh_script_progression "Adding $app's configuration files..."
 
 ynh_config_add --template=".env" --destination="$install_dir/anubis.env"
+
+#chmod +x "$install_dir/anubis"
 
 #=================================================
 # SYSTEM CONFIGURATION
