@@ -7,7 +7,7 @@ name = "Anubis"
 description.en = "Proof-of-work to stop AI crawlers"
 description.fr = "Preuve de travail pour stopper les robots d'indexation de l'IA"
 
-version = "1.19.1~ynh1"
+version = "1.23.1~ynh1"
 
 maintainers = []
 
@@ -19,13 +19,12 @@ code = "https://github.com/TecharoHQ/anubis"
 fund = "https://www.patreon.com/cadey"
 
 [integration]
-yunohost = ">= 12.0.9"
+yunohost = ">= 12.1.17"
 helpers_version = "2.1"
 architectures = "all"
 multi_instance = true
 
 ldap = false
-
 sso = false
 
 disk = "50M"
@@ -45,11 +44,12 @@ ram.runtime = "50M"
     [resources.sources]
 
     [resources.sources.main]
-    amd64.url = "https://github.com/TecharoHQ/anubis/releases/download/v1.19.1/anubis-1.19.1-linux-amd64.tar.gz"
-    amd64.sha256 = "36bff879f109560e0c5f3725618c5689df14a1a965b93ca4b08747309ed97acf"
-    arm64.url = "https://github.com/TecharoHQ/anubis/releases/download/v1.19.1/anubis-1.19.1-linux-arm64.tar.gz"
-    arm64.sha256 = "35a52b1e731408e4546de218a688161eb4c5f906b228166490289540ecdb7974"
-    # autoupdate.strategy = "latest_github_tag"
+    amd64.url = "https://github.com/TecharoHQ/anubis/releases/download/v1.23.1/anubis-1.23.1-linux-amd64.tar.gz"
+    amd64.sha256 = "cb0349df8baa8bcec16a357b331c7614c3abd763b3a7210d8bcc18383f86c5bb"
+    arm64.url = "https://github.com/TecharoHQ/anubis/releases/download/v1.23.1/anubis-1.23.1-linux-arm64.tar.gz"
+    arm64.sha256 = "8aa6b3c716cadfaae290b533c4f5d8ebb1cf00d604f205085a1e6675f713159c"
+    
+    autoupdate.strategy = "latest_github_release"
 
     [resources.system_user]
 
