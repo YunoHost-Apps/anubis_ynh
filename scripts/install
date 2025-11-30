@@ -14,7 +14,7 @@ ynh_script_progression "Setting up source files..."
 # Download, check integrity, uncompress and patch the source from manifest.toml
 ynh_setup_source --dest_dir="$install_dir"
 
-chmod +x "$install_dir/anubis"
+chmod +x "$install_dir/bin/anubis"
 
 #=================================================
 # APP INITIAL CONFIGURATION
